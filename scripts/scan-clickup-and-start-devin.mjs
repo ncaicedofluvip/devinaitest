@@ -74,7 +74,7 @@ async function main() {
   const tasks = data.tasks || [];
 
   const candidates = tasks
-    .filter(t => statusOf(t) === READY_STATUS)
+    .filter(t => statusOf(t) === IN_PROGRESS_STATUS)
     .filter(hasRequiredTag)
     .slice(0, MAX_TASKS_PER_RUN);
 
