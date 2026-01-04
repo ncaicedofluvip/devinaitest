@@ -1,0 +1,120 @@
+<main class="pricing-page">
+  <section class="pricing-hero">
+    <span class="pricing-badge">Plans and Pricing</span>
+    <h1 class="pricing-title">{{ t('pricing.title') }}</h1>
+    <p class="pricing-subtitle">{{ t('pricing.subtitle') }}</p>
+
+    <div class="billing-toggle">
+      <span class="billing-option" [class.active]="!isAnnual()">{{ t('pricing.monthly') }}</span>
+      <button type="button" class="toggle-switch" [class.annual]="isAnnual()" (click)="toggleBilling()">
+        <span class="toggle-knob"></span>
+      </button>
+      <span class="billing-option" [class.active]="isAnnual()">{{ t('pricing.annually') }}</span>
+      <span class="save-badge">{{ t('pricing.saveUp') }}</span>
+    </div>
+  </section>
+
+  <section class="pricing-cards">
+    <div class="pricing-card">
+      <h3 class="plan-name">{{ t('pricing.free.name') }}</h3>
+      <div class="plan-price">
+        <span class="price">{{ t('pricing.free.price') }}</span>
+        <span class="period">{{ t('pricing.perMonth') }}</span>
+      </div>
+      <p class="yearly-price">{{ t('pricing.free.yearlyPrice') }} {{ t('pricing.perYear') }}</p>
+      <button type="button" class="plan-button">{{ t('pricing.getStarted') }}</button>
+
+      <ul class="features-list">
+        @for (feature of planFeatures; track feature.key) {
+          <li class="feature-item">
+            <span class="feature-name">{{ t('pricing.features.' + feature.key) }}</span>
+            @if (isFeatureDisabled(feature.free)) {
+              <svg class="feature-icon disabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            } @else if (isFeatureEnabled(feature.free)) {
+              @if (getFeatureValue(feature.free)) {
+                <span class="feature-value">{{ getFeatureValue(feature.free) }}</span>
+              } @else {
+                <svg class="feature-icon enabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              }
+            }
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="pricing-card">
+      <h3 class="plan-name">{{ t('pricing.starter.name') }}</h3>
+      <div class="plan-price">
+        <span class="price">{{ t('pricing.starter.price') }}</span>
+        <span class="period">{{ t('pricing.perMonth') }}</span>
+      </div>
+      <p class="yearly-price">{{ t('pricing.starter.yearlyPrice') }} {{ t('pricing.perYear') }}</p>
+      <button type="button" class="plan-button">{{ t('pricing.subscribe') }}</button>
+
+      <ul class="features-list">
+        @for (feature of planFeatures; track feature.key) {
+          <li class="feature-item">
+            <span class="feature-name">{{ t('pricing.features.' + feature.key) }}</span>
+            @if (isFeatureDisabled(feature.starter)) {
+              <svg class="feature-icon disabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            } @else if (isFeatureEnabled(feature.starter)) {
+              @if (getFeatureValue(feature.starter)) {
+                <span class="feature-value">{{ getFeatureValue(feature.starter) }}</span>
+              } @else {
+                <svg class="feature-icon enabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              }
+            }
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="pricing-card popular">
+      <span class="popular-badge">{{ t('pricing.mostPopular') }}</span>
+      <h3 class="plan-name">{{ t('pricing.pro.name') }}</h3>
+      <div class="plan-price">
+        <span class="price">{{ t('pricing.pro.price') }}</span>
+        <span class="period">{{ t('pricing.perMonth') }}</span>
+      </div>
+      <p class="yearly-price">
+        @if (isAnnual()) {
+          <span class="original-price">$228</span>
+        }
+        {{ t('pricing.pro.yearlyPrice') }} {{ t('pricing.perYear') }}
+      </p>
+      <button type="button" class="plan-button primary">{{ t('pricing.subscribe') }}</button>
+
+      <ul class="features-list">
+        @for (feature of planFeatures; track feature.key) {
+          <li class="feature-item">
+            <span class="feature-name">{{ t('pricing.features.' + feature.key) }}</span>
+            @if (isFeatureDisabled(feature.pro)) {
+              <svg class="feature-icon disabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            } @else if (isFeatureEnabled(feature.pro)) {
+              @if (getFeatureValue(feature.pro)) {
+                <span class="feature-value">{{ getFeatureValue(feature.pro) }}</span>
+              } @else {
+                <svg class="feature-icon enabled" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              }
+            }
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+</main>

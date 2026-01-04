@@ -1,0 +1,278 @@
+$primary-color: #E91E63;
+$primary-hover: #C2185B;
+$text-color: #1f2937;
+$text-muted: #6b7280;
+
+.affiliate-page {
+  min-height: calc(100vh - 80px);
+}
+
+.affiliate-hero {
+  background: linear-gradient(135deg, #e91e63 0%, #d81b60 100%);
+  padding: 4rem 1.5rem;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    padding: 6rem 2rem;
+  }
+}
+
+.affiliate-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1.25rem;
+
+  @media (min-width: 768px) {
+    font-size: 2.75rem;
+  }
+}
+
+.affiliate-subtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $primary-color;
+  background: white;
+  border: none;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &:hover {
+    background: #f9fafb;
+    text-decoration: none;
+    color: $primary-color;
+  }
+}
+
+.benefits-section {
+  padding: 4rem 1.5rem;
+  background: white;
+
+  @media (min-width: 768px) {
+    padding: 5rem 2rem;
+  }
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $text-color;
+  text-align: center;
+  margin-bottom: 2.5rem;
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+.benefit-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #f9fafb;
+  border-radius: 1rem;
+}
+
+.benefit-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+
+  svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: $primary-color;
+  }
+}
+
+.benefit-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: $text-color;
+  margin-bottom: 0.75rem;
+}
+
+.benefit-description {
+  font-size: 0.9375rem;
+  color: $text-muted;
+  line-height: 1.5;
+}
+
+.form-section {
+  padding: 4rem 1.5rem;
+  background: #f9fafb;
+
+  @media (min-width: 768px) {
+    padding: 5rem 2rem;
+  }
+}
+
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 2rem;
+
+  @media (min-width: 768px) {
+    padding: 2.5rem;
+  }
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $text-color;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.affiliate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $text-color;
+}
+
+.form-input,
+.form-textarea {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: $primary-color;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+
+  &:hover:not(:disabled) {
+    background: $primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+
+  svg {
+    width: 3rem;
+    height: 3rem;
+    color: #22c55e;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: $text-color;
+    font-weight: 500;
+  }
+}

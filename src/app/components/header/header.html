@@ -9,64 +9,63 @@
     <!-- Desktop Navigation -->
     <ul class="header-menu">
       <li class="menu-item">
-        <button
-          type="button"
-          class="menu-button"
-          (click)="toggleFeaturesDropdown()"
-          [attr.aria-expanded]="isFeaturesDropdownOpen()"
-        >
-          Features
-          <svg class="menu-icon" [class.rotate]="isFeaturesDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </button>
+        <a routerLink="/features" class="menu-link">{{ t('header.features') }}</a>
       </li>
       <li class="menu-item">
-        <button type="button" class="menu-button">For Managers</button>
+        <a routerLink="/for-managers" class="menu-link">{{ t('header.forManagers') }}</a>
       </li>
       <li class="menu-item">
-        <button
-          type="button"
-          class="menu-button"
-          (click)="toggleFreeToolsDropdown()"
-          [attr.aria-expanded]="isFreeToolsDropdownOpen()"
-        >
-          Free Tools
-          <svg class="menu-icon" [class.rotate]="isFreeToolsDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </button>
+        <a routerLink="/free-tools" class="menu-link">{{ t('header.freeTools') }}</a>
       </li>
       <li class="menu-item">
-        <a routerLink="/pricing" class="menu-link">Pricing</a>
+        <a routerLink="/pricing" class="menu-link">{{ t('header.pricing') }}</a>
       </li>
       <li class="menu-item">
-        <a routerLink="/affiliate" class="menu-link">Affiliate</a>
+        <a routerLink="/affiliate" class="menu-link">{{ t('header.affiliate') }}</a>
       </li>
     </ul>
 
     <!-- Desktop Actions -->
     <ul class="header-actions">
-      <li>
+      <li class="language-dropdown-container">
         <button
           type="button"
           class="language-button"
           aria-label="Select language"
           (click)="toggleLanguageDropdown()"
+          [attr.aria-expanded]="isLanguageDropdownOpen()"
         >
           <svg class="globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
           </svg>
-          EN
+          {{ languageLabel() }}
+          <svg class="dropdown-icon" [class.rotate]="isLanguageDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
         </button>
+        @if (isLanguageDropdownOpen()) {
+          <div class="language-dropdown">
+            @for (lang of languages; track lang.code) {
+              <button
+                type="button"
+                class="language-option"
+                [class.active]="currentLanguage() === lang.code"
+                (click)="selectLanguage(lang.code)"
+              >
+                <span class="lang-code">{{ lang.label }}</span>
+                <span class="lang-name">{{ lang.name }}</span>
+              </button>
+            }
+          </div>
+        }
       </li>
       <li>
-        <button type="button" class="login-button">Login</button>
+        <button type="button" class="login-button">{{ t('header.login') }}</button>
       </li>
       <li>
         <button type="button" class="get-started-button">
-          Get Started
+          {{ t('header.getStarted') }}
           <svg class="arrow-icon" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
@@ -77,7 +76,7 @@
     <!-- Mobile Menu Button -->
     <button
       type="button"
-      class="mobile-menu-button"
+      class="mobile-menu-toggle"
       aria-label="Open menu"
       (click)="toggleMobileMenu()"
     >
@@ -104,54 +103,41 @@
       <!-- Mobile Navigation -->
       <ul class="mobile-menu">
         <li class="mobile-menu-item">
-          <button
-            type="button"
-            class="mobile-menu-button"
-            (click)="toggleFeaturesDropdown()"
-          >
-            Features
-            <svg class="menu-icon" [class.rotate]="isFeaturesDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </button>
+          <a routerLink="/features" class="mobile-menu-link" (click)="closeMobileMenu()">{{ t('header.features') }}</a>
         </li>
         <li class="mobile-menu-item">
-          <button type="button" class="mobile-menu-button">For Managers</button>
+          <a routerLink="/for-managers" class="mobile-menu-link" (click)="closeMobileMenu()">{{ t('header.forManagers') }}</a>
         </li>
         <li class="mobile-menu-item">
-          <a routerLink="/pricing" class="mobile-menu-link" (click)="closeMobileMenu()">Pricing</a>
+          <a routerLink="/free-tools" class="mobile-menu-link" (click)="closeMobileMenu()">{{ t('header.freeTools') }}</a>
         </li>
         <li class="mobile-menu-item">
-          <a routerLink="/affiliate" class="mobile-menu-link" (click)="closeMobileMenu()">Affiliate</a>
+          <a routerLink="/pricing" class="mobile-menu-link" (click)="closeMobileMenu()">{{ t('header.pricing') }}</a>
         </li>
         <li class="mobile-menu-item">
-          <button
-            type="button"
-            class="mobile-menu-button"
-            (click)="toggleFreeToolsDropdown()"
-          >
-            Free Tools
-            <svg class="menu-icon" [class.rotate]="isFreeToolsDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </button>
+          <a routerLink="/affiliate" class="mobile-menu-link" (click)="closeMobileMenu()">{{ t('header.affiliate') }}</a>
         </li>
       </ul>
 
       <!-- Mobile Actions -->
       <div class="mobile-actions">
-        <button type="button" class="mobile-language-button">
-          <svg class="globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
-          EN
-          <svg class="chevron-icon" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </button>
-        <button type="button" class="mobile-login-button">Login</button>
-        <button type="button" class="mobile-get-started-button">Get Started</button>
+        <div class="mobile-language-selector">
+          <span class="mobile-language-label">Language:</span>
+          <div class="mobile-language-options">
+            @for (lang of languages; track lang.code) {
+              <button
+                type="button"
+                class="mobile-lang-btn"
+                [class.active]="currentLanguage() === lang.code"
+                (click)="selectLanguage(lang.code)"
+              >
+                {{ lang.label }}
+              </button>
+            }
+          </div>
+        </div>
+        <button type="button" class="mobile-login-button">{{ t('header.login') }}</button>
+        <button type="button" class="mobile-get-started-button">{{ t('header.getStarted') }}</button>
       </div>
     </div>
   </div>
