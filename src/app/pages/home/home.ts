@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
-type Platform = 'instagram' | 'tiktok' | 'youtube' | 'twitter';
+import { Platform } from '../../services/modash.service';
 
 interface PlatformConfig {
   name: string;
@@ -17,7 +16,7 @@ interface PlatformConfig {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
 })
 export class HomeComponent {
   selectedPlatform: Platform = 'instagram';
@@ -28,27 +27,23 @@ export class HomeComponent {
       name: 'Instagram',
       icon: 'instagram',
       prefix: 'instagram.com/',
-      placeholder: 'Paste your profile URL or type your @handle'
+      placeholder: 'Paste your profile URL or type your @handle',
     },
     tiktok: {
       name: 'TikTok',
       icon: 'tiktok',
       prefix: 'tiktok.com/@',
-      placeholder: 'Paste your profile URL or type your @handle'
+      placeholder: 'Paste your profile URL or type your @handle',
     },
     youtube: {
       name: 'YouTube',
       icon: 'youtube',
       prefix: 'youtube.com/@',
-      placeholder: 'Paste your profile URL or type your @handle'
+      placeholder: 'Paste your profile URL or type your @handle',
     },
-    twitter: {
-      name: 'Twitter',
-      icon: 'twitter',
-      prefix: 'twitter.com/',
-      placeholder: 'Paste your profile URL or type your @handle'
-    }
   };
+
+  platformList: Platform[] = ['instagram', 'tiktok', 'youtube'];
 
   constructor(private router: Router) {}
 
@@ -62,9 +57,14 @@ export class HomeComponent {
   }
 
   onSubmit(): void {
-    const fullUrl = this.currentPlatform.prefix + this.urlInput;
+    if (!this.urlInput.trim()) {
+      return;
+    }
     this.router.navigate(['/report'], {
-      queryParams: { url: fullUrl }
+      queryParams: {
+        platform: this.selectedPlatform,
+        input: this.urlInput.trim(),
+      },
     });
   }
 }
