@@ -6,6 +6,10 @@ import {
   Platform,
   ModashReport,
   FetchError,
+  WeightWithCode,
+  WeightWithCodeName,
+  WeightWithName,
+  ModashAudience,
 } from '../../services/modash.service';
 
 type ReportState = 'loading' | 'success' | 'error';
@@ -217,5 +221,172 @@ export class ReportComponent implements OnInit {
       return (num / 1000).toFixed(1) + 'K';
     }
     return num.toString();
+  }
+
+  getBio(): string {
+    const data = this.report();
+    return data?.profile?.bio || data?.profile?.description || '';
+  }
+
+  getLocation(): string {
+    const data = this.report();
+    const parts: string[] = [];
+    if (data?.profile?.city) parts.push(data.profile.city);
+    if (data?.profile?.state) parts.push(data.profile.state);
+    if (data?.profile?.country) parts.push(data.profile.country);
+    return parts.join(', ') || '-';
+  }
+
+  getAccountType(): string {
+    const data = this.report();
+    return data?.profile?.accountType || '-';
+  }
+
+  getAgeGroup(): string {
+    const data = this.report();
+    return data?.profile?.ageGroup || '-';
+  }
+
+  getGender(): string {
+    const data = this.report();
+    const gender = data?.profile?.gender;
+    if (gender === 'MALE') return 'Male';
+    if (gender === 'FEMALE') return 'Female';
+    return '-';
+  }
+
+  getCredibility(): string {
+    const data = this.report();
+    const credibility = data?.profile?.audience?.credibility;
+    return credibility !== undefined ? `${(credibility * 100).toFixed(1)}%` : '-';
+  }
+
+  getAvgReelsPlays(): string {
+    const data = this.report();
+    const count = data?.profile?.avgReelsPlays;
+    return count ? this.formatNumber(count) : '-';
+  }
+
+  getPaidPostPerformance(): string {
+    const data = this.report();
+    const performance = data?.profile?.paidPostPerformance;
+    return performance !== undefined ? `${(performance * 100).toFixed(1)}%` : '-';
+  }
+
+  getAudience(): ModashAudience | null {
+    const data = this.report();
+    return data?.profile?.audience || null;
+  }
+
+  hasAudienceData(): boolean {
+    const audience = this.getAudience();
+    return !!(audience && (audience.genders?.length || audience.ages?.length || audience.geoCountries?.length));
+  }
+
+  getGenderData(): WeightWithCode[] {
+    const audience = this.getAudience();
+    return audience?.genders || [];
+  }
+
+  getAgeData(): WeightWithCode[] {
+    const audience = this.getAudience();
+    return audience?.ages || [];
+  }
+
+  getCountryData(): WeightWithCodeName[] {
+    const audience = this.getAudience();
+    return (audience?.geoCountries || []).slice(0, 10);
+  }
+
+  getCityData(): WeightWithName[] {
+    const audience = this.getAudience();
+    return (audience?.geoCities || []).slice(0, 10);
+  }
+
+  getLanguageData(): Array<{ code: string; name: string; weight: number }> {
+    const audience = this.getAudience();
+    return (audience?.languages || []).slice(0, 10);
+  }
+
+  getAudienceInterests(): WeightWithName[] {
+    const audience = this.getAudience();
+    return (audience?.interests || []).slice(0, 10);
+  }
+
+  getAudienceTypes(): WeightWithCode[] {
+    const audience = this.getAudience();
+    return audience?.audienceTypes || [];
+  }
+
+  formatPercentage(weight: number): string {
+    return `${(weight * 100).toFixed(1)}%`;
+  }
+
+  formatGenderCode(code: string): string {
+    if (code === 'MALE' || code === 'male') return 'Male';
+    if (code === 'FEMALE' || code === 'female') return 'Female';
+    return code;
+  }
+
+  formatAgeCode(code: string): string {
+    return code.replace('-', ' - ').replace('65-', '65+');
+  }
+
+  formatAudienceTypeCode(code: string): string {
+    const typeMap: Record<string, string> = {
+      real: 'Real People',
+      influencers: 'Influencers',
+      mass_followers: 'Mass Followers',
+      suspicious: 'Suspicious',
+    };
+    return typeMap[code] || code;
+  }
+
+  getBarWidth(weight: number, maxWeight?: number): string {
+    const max = maxWeight || 1;
+    const percentage = Math.min((weight / max) * 100, 100);
+    return `${percentage}%`;
+  }
+
+  getMaxWeight(data: Array<{ weight: number }>): number {
+    if (!data.length) return 1;
+    return Math.max(...data.map((d) => d.weight));
+  }
+
+  getInterests(): Array<{ id: string; name: string }> {
+    const data = this.report();
+    return (data?.profile?.interests || []).slice(0, 10);
+  }
+
+  getHashtags(): Array<{ tag: string; weight: number }> {
+    const data = this.report();
+    return (data?.profile?.hashtags || []).slice(0, 10);
+  }
+
+  getMentions(): Array<{ tag: string; weight: number }> {
+    const data = this.report();
+    return (data?.profile?.mentions || []).slice(0, 10);
+  }
+
+  hasProfileDetails(): boolean {
+    const data = this.report();
+    return !!(
+      data?.profile?.bio ||
+      data?.profile?.description ||
+      data?.profile?.city ||
+      data?.profile?.country ||
+      data?.profile?.accountType ||
+      data?.profile?.ageGroup ||
+      data?.profile?.gender
+    );
+  }
+
+  hasInterestsOrHashtags(): boolean {
+    const data = this.report();
+    return !!(
+      (data?.profile?.interests && data.profile.interests.length > 0) ||
+      (data?.profile?.hashtags && data.profile.hashtags.length > 0) ||
+      (data?.profile?.mentions && data.profile.mentions.length > 0)
+    );
   }
 }

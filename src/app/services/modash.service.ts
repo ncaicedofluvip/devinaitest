@@ -13,6 +13,77 @@ export interface CacheStore {
   [key: string]: CacheEntry;
 }
 
+export interface WeightWithCode {
+  code: string;
+  weight: number;
+}
+
+export interface WeightWithCodeName {
+  code: string;
+  name: string;
+  weight: number;
+}
+
+export interface WeightWithName {
+  name: string;
+  weight: number;
+}
+
+export interface GenderPerAge {
+  code: string;
+  male: number;
+  female: number;
+}
+
+export interface AudienceLanguage {
+  code: string;
+  name: string;
+  weight: number;
+}
+
+export interface AudienceType {
+  code: string;
+  weight: number;
+}
+
+export interface ModashAudience {
+  notable?: number;
+  credibility?: number;
+  genders?: WeightWithCode[];
+  ages?: WeightWithCode[];
+  geoCountries?: WeightWithCodeName[];
+  geoCities?: WeightWithName[];
+  geoStates?: WeightWithName[];
+  gendersPerAge?: GenderPerAge[];
+  languages?: AudienceLanguage[];
+  interests?: WeightWithName[];
+  brandAffinity?: WeightWithName[];
+  audienceTypes?: AudienceType[];
+  audienceReachability?: WeightWithCode[];
+  ethnicities?: WeightWithCode[];
+}
+
+export interface ModashInterest {
+  id: string;
+  name: string;
+}
+
+export interface ModashContact {
+  type: string;
+  value: string;
+}
+
+export interface ModashRecentPost {
+  id: string;
+  text?: string;
+  url?: string;
+  created?: string;
+  likes?: number;
+  comments?: number;
+  views?: number;
+  thumbnail?: string;
+}
+
 export interface ModashProfile {
   userId: string;
   username?: string;
@@ -27,15 +98,83 @@ export interface ModashProfile {
   avgLikes?: number;
   avgComments?: number;
   avgViews?: number;
+  avgReelsPlays?: number;
   totalPosts?: number;
   totalVideos?: number;
   subscriberCount?: number;
   viewCount?: number;
+  totalViews?: number;
+  postsCount?: number;
+  bio?: string;
+  description?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  gender?: 'MALE' | 'FEMALE';
+  ageGroup?: string;
+  accountType?: 'Regular' | 'Business' | 'Creator';
+  language?: { code: string; name: string };
+  paidPostPerformance?: number;
+}
+
+export interface ModashReportProfile {
+  userId: string;
+  profile?: {
+    userId?: string;
+    username?: string;
+    fullname?: string;
+    picture?: string;
+    url?: string;
+    isVerified?: boolean;
+    isPrivate?: boolean;
+    followers?: number;
+    following?: number;
+    engagementRate?: number;
+  };
+  audience?: ModashAudience;
+  hashtags?: Array<{ tag: string; weight: number }>;
+  mentions?: Array<{ tag: string; weight: number }>;
+  interests?: ModashInterest[];
+  brandAffinity?: Array<{ id: string; name: string }>;
+  contacts?: ModashContact[];
+  recentPosts?: ModashRecentPost[];
+  popularPosts?: ModashRecentPost[];
+  sponsoredPosts?: ModashRecentPost[];
+  statHistory?: Array<{ month: string; followers?: number; following?: number; avgLikes?: number }>;
+  lookalikes?: Array<{ userId: string; username?: string; picture?: string; followers?: number }>;
+  city?: string;
+  state?: string;
+  country?: string;
+  gender?: 'MALE' | 'FEMALE';
+  ageGroup?: string;
+  accountType?: 'Regular' | 'Business' | 'Creator';
+  isPrivate?: boolean;
+  isVerified?: boolean;
+  postsCount?: number;
+  avgLikes?: number;
+  avgComments?: number;
+  avgViews?: number;
+  avgReelsPlays?: number;
+  bio?: string;
+  description?: string;
+  totalViews?: number;
+  paidPostPerformance?: number;
+  username?: string;
+  fullname?: string;
+  picture?: string;
+  url?: string;
+  followers?: number;
+  following?: number;
+  engagementRate?: number;
+  subscriberCount?: number;
+  viewCount?: number;
+  totalPosts?: number;
+  totalVideos?: number;
 }
 
 export interface ModashReport {
-  profile: ModashProfile;
-  [key: string]: unknown;
+  error?: boolean;
+  profile: ModashReportProfile;
 }
 
 export interface FetchResult {
