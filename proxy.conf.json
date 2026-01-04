@@ -7,5 +7,13 @@
       "^/modash": "/v1"
     },
     "logLevel": "debug"
+  },
+  "/api/shorten": {
+    "target": "https://is.gd",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/shorten": "/create.php"
+    }
   }
 }
