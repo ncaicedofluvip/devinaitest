@@ -46,7 +46,7 @@ export class FreeToolsComponent {
     this.shortenedUrl.set('');
 
     try {
-      const response = await fetch(`https://is.gd/create.php?format=simple&url=${encodeURIComponent(url)}`);
+      const response = await fetch(`/api/shorten?format=simple&url=${encodeURIComponent(url)}`);
       if (response.ok) {
         const shortUrl = await response.text();
         this.shortenedUrl.set(shortUrl.trim());
