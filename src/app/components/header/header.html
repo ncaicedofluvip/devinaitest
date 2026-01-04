@@ -1,0 +1,158 @@
+<header class="header">
+  <nav class="header-nav">
+    <!-- Logo -->
+    <a routerLink="/" class="header-logo" (click)="closeMobileMenu()">
+      <span class="logo-icon">C</span>
+      <span class="logo-text">reator<span class="logo-accent">s</span>Jet</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <ul class="header-menu">
+      <li class="menu-item">
+        <button
+          type="button"
+          class="menu-button"
+          (click)="toggleFeaturesDropdown()"
+          [attr.aria-expanded]="isFeaturesDropdownOpen()"
+        >
+          Features
+          <svg class="menu-icon" [class.rotate]="isFeaturesDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </li>
+      <li class="menu-item">
+        <button type="button" class="menu-button">For Managers</button>
+      </li>
+      <li class="menu-item">
+        <button
+          type="button"
+          class="menu-button"
+          (click)="toggleFreeToolsDropdown()"
+          [attr.aria-expanded]="isFreeToolsDropdownOpen()"
+        >
+          Free Tools
+          <svg class="menu-icon" [class.rotate]="isFreeToolsDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </li>
+      <li class="menu-item">
+        <a routerLink="/pricing" class="menu-link">Pricing</a>
+      </li>
+      <li class="menu-item">
+        <a routerLink="/affiliate" class="menu-link">Affiliate</a>
+      </li>
+    </ul>
+
+    <!-- Desktop Actions -->
+    <ul class="header-actions">
+      <li>
+        <button
+          type="button"
+          class="language-button"
+          aria-label="Select language"
+          (click)="toggleLanguageDropdown()"
+        >
+          <svg class="globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          EN
+        </button>
+      </li>
+      <li>
+        <button type="button" class="login-button">Login</button>
+      </li>
+      <li>
+        <button type="button" class="get-started-button">
+          Get Started
+          <svg class="arrow-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Mobile Menu Button -->
+    <button
+      type="button"
+      class="mobile-menu-button"
+      aria-label="Open menu"
+      (click)="toggleMobileMenu()"
+    >
+      <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Drawer Overlay -->
+  @if (isMobileMenuOpen()) {
+    <div class="mobile-overlay" (click)="closeMobileMenu()"></div>
+  }
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" [class.open]="isMobileMenuOpen()">
+    <div class="mobile-drawer-content">
+      <!-- Mobile Logo -->
+      <a routerLink="/" class="header-logo mobile-logo" (click)="closeMobileMenu()">
+        <span class="logo-icon">C</span>
+        <span class="logo-text">reator<span class="logo-accent">s</span>Jet</span>
+      </a>
+
+      <!-- Mobile Navigation -->
+      <ul class="mobile-menu">
+        <li class="mobile-menu-item">
+          <button
+            type="button"
+            class="mobile-menu-button"
+            (click)="toggleFeaturesDropdown()"
+          >
+            Features
+            <svg class="menu-icon" [class.rotate]="isFeaturesDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </li>
+        <li class="mobile-menu-item">
+          <button type="button" class="mobile-menu-button">For Managers</button>
+        </li>
+        <li class="mobile-menu-item">
+          <a routerLink="/pricing" class="mobile-menu-link" (click)="closeMobileMenu()">Pricing</a>
+        </li>
+        <li class="mobile-menu-item">
+          <a routerLink="/affiliate" class="mobile-menu-link" (click)="closeMobileMenu()">Affiliate</a>
+        </li>
+        <li class="mobile-menu-item">
+          <button
+            type="button"
+            class="mobile-menu-button"
+            (click)="toggleFreeToolsDropdown()"
+          >
+            Free Tools
+            <svg class="menu-icon" [class.rotate]="isFreeToolsDropdownOpen()" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Mobile Actions -->
+      <div class="mobile-actions">
+        <button type="button" class="mobile-language-button">
+          <svg class="globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+          EN
+          <svg class="chevron-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <button type="button" class="mobile-login-button">Login</button>
+        <button type="button" class="mobile-get-started-button">Get Started</button>
+      </div>
+    </div>
+  </div>
+</header>
