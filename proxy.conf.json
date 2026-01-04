@@ -1,0 +1,11 @@
+{
+  "/modash": {
+    "target": "https://api.modash.io",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/modash": "/v1"
+    },
+    "logLevel": "debug"
+  }
+}
