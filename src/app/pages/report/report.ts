@@ -119,8 +119,9 @@ export class ReportComponent implements OnInit {
   }
 
   getProfilePicture(): string {
+    const rp = this.getReportProfile();
     const core = this.getCoreProfile();
-    return core?.picture ?? '';
+    return rp?.profile?.picture ?? rp?.picture ?? core?.picture ?? '';
   }
 
   getProfileName(): string {
