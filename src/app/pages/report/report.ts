@@ -119,65 +119,72 @@ export class ReportComponent implements OnInit {
   }
 
   getProfilePicture(): string {
-    const data = this.report();
-    return data?.profile?.picture || '';
+    const core = this.getCoreProfile();
+    return core?.picture ?? '';
   }
 
   getProfileName(): string {
-    const data = this.report();
-    return data?.profile?.fullname || data?.profile?.username || this.userId();
+    const core = this.getCoreProfile();
+    return core?.fullname ?? core?.username ?? this.userId();
   }
 
   getProfileUsername(): string {
-    const data = this.report();
-    return data?.profile?.username || this.userId();
+    const core = this.getCoreProfile();
+    return core?.username ?? this.userId();
   }
 
   getFollowers(): string {
-    const data = this.report();
-    const count = data?.profile?.followers || data?.profile?.subscriberCount;
-    return count ? this.formatNumber(count) : '-';
+    const core = this.getCoreProfile();
+    const rp = this.getReportProfile();
+    const count = core?.followers ?? core?.subscriberCount ?? rp?.subscriberCount;
+    return count != null ? this.formatNumber(count) : '-';
   }
 
   getFollowing(): string {
-    const data = this.report();
-    const count = data?.profile?.following;
-    return count ? this.formatNumber(count) : '-';
+    const core = this.getCoreProfile();
+    const count = core?.following;
+    return count != null ? this.formatNumber(count) : '-';
   }
 
   getEngagementRate(): string {
-    const data = this.report();
-    const rate = data?.profile?.engagementRate;
-    return rate ? `${(rate * 100).toFixed(2)}%` : '-';
+    const core = this.getCoreProfile();
+    const rp = this.getReportProfile();
+    const rate = core?.engagementRate ?? rp?.engagementRate;
+    return rate != null ? `${(rate * 100).toFixed(2)}%` : '-';
   }
 
   getAvgLikes(): string {
-    const data = this.report();
-    const count = data?.profile?.avgLikes;
-    return count ? this.formatNumber(count) : '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    const count = rp?.avgLikes ?? core?.avgLikes;
+    return count != null ? this.formatNumber(count) : '-';
   }
 
   getAvgComments(): string {
-    const data = this.report();
-    const count = data?.profile?.avgComments;
-    return count ? this.formatNumber(count) : '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    const count = rp?.avgComments ?? core?.avgComments;
+    return count != null ? this.formatNumber(count) : '-';
   }
 
   getAvgViews(): string {
-    const data = this.report();
-    const count = data?.profile?.avgViews || data?.profile?.viewCount;
-    return count ? this.formatNumber(count) : '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    const count = rp?.avgViews ?? core?.avgViews ?? rp?.viewCount ?? core?.viewCount;
+    return count != null ? this.formatNumber(count) : '-';
   }
 
   getTotalPosts(): string {
-    const data = this.report();
-    const count = data?.profile?.totalPosts || data?.profile?.totalVideos;
-    return count ? this.formatNumber(count) : '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    const count = rp?.postsCount ?? core?.postsCount ?? rp?.totalPosts ?? core?.totalPosts ?? rp?.totalVideos ?? core?.totalVideos;
+    return count != null ? this.formatNumber(count) : '-';
   }
 
   isVerified(): boolean {
-    const data = this.report();
-    return data?.profile?.isVerified || false;
+    const core = this.getCoreProfile();
+    const rp = this.getReportProfile();
+    return core?.isVerified ?? rp?.isVerified ?? false;
   }
 
   getPlatformIcon(): string {
@@ -213,6 +220,15 @@ export class ReportComponent implements OnInit {
     return data ? JSON.stringify(data, null, 2) : '';
   }
 
+  private getReportProfile() {
+    return this.report()?.profile;
+  }
+
+  private getCoreProfile() {
+    const rp = this.getReportProfile();
+    return rp?.profile ?? rp;
+  }
+
   private formatNumber(num: number): string {
     if (num >= 1000000) {
       return (num / 1000000).toFixed(1) + 'M';
@@ -224,58 +240,68 @@ export class ReportComponent implements OnInit {
   }
 
   getBio(): string {
-    const data = this.report();
-    return data?.profile?.bio || data?.profile?.description || '';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    return rp?.bio ?? core?.bio ?? rp?.description ?? core?.description ?? '';
   }
 
   getLocation(): string {
-    const data = this.report();
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
     const parts: string[] = [];
-    if (data?.profile?.city) parts.push(data.profile.city);
-    if (data?.profile?.state) parts.push(data.profile.state);
-    if (data?.profile?.country) parts.push(data.profile.country);
+    const city = rp?.city ?? core?.city;
+    const state = rp?.state ?? core?.state;
+    const country = rp?.country ?? core?.country;
+    if (city) parts.push(city);
+    if (state) parts.push(state);
+    if (country) parts.push(country);
     return parts.join(', ') || '-';
   }
 
   getAccountType(): string {
-    const data = this.report();
-    return data?.profile?.accountType || '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    return rp?.accountType ?? core?.accountType ?? '-';
   }
 
   getAgeGroup(): string {
-    const data = this.report();
-    return data?.profile?.ageGroup || '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    return rp?.ageGroup ?? core?.ageGroup ?? '-';
   }
 
   getGender(): string {
-    const data = this.report();
-    const gender = data?.profile?.gender;
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    const gender = rp?.gender ?? core?.gender;
     if (gender === 'MALE') return 'Male';
     if (gender === 'FEMALE') return 'Female';
     return '-';
   }
 
   getCredibility(): string {
-    const data = this.report();
-    const credibility = data?.profile?.audience?.credibility;
-    return credibility !== undefined ? `${(credibility * 100).toFixed(1)}%` : '-';
+    const rp = this.getReportProfile();
+    const credibility = rp?.audience?.credibility;
+    return credibility != null ? `${(credibility * 100).toFixed(1)}%` : '-';
   }
 
   getAvgReelsPlays(): string {
-    const data = this.report();
-    const count = data?.profile?.avgReelsPlays;
-    return count ? this.formatNumber(count) : '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    const count = rp?.avgReelsPlays ?? core?.avgReelsPlays;
+    return count != null ? this.formatNumber(count) : '-';
   }
 
   getPaidPostPerformance(): string {
-    const data = this.report();
-    const performance = data?.profile?.paidPostPerformance;
-    return performance !== undefined ? `${(performance * 100).toFixed(1)}%` : '-';
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
+    const performance = rp?.paidPostPerformance ?? core?.paidPostPerformance;
+    return performance != null ? `${(performance * 100).toFixed(1)}%` : '-';
   }
 
   getAudience(): ModashAudience | null {
-    const data = this.report();
-    return data?.profile?.audience || null;
+    const rp = this.getReportProfile();
+    return rp?.audience ?? null;
   }
 
   hasAudienceData(): boolean {
@@ -369,24 +395,32 @@ export class ReportComponent implements OnInit {
   }
 
   hasProfileDetails(): boolean {
-    const data = this.report();
+    const rp = this.getReportProfile();
+    const core = this.getCoreProfile();
     return !!(
-      data?.profile?.bio ||
-      data?.profile?.description ||
-      data?.profile?.city ||
-      data?.profile?.country ||
-      data?.profile?.accountType ||
-      data?.profile?.ageGroup ||
-      data?.profile?.gender
+      rp?.bio ||
+      core?.bio ||
+      rp?.description ||
+      core?.description ||
+      rp?.city ||
+      core?.city ||
+      rp?.country ||
+      core?.country ||
+      rp?.accountType ||
+      core?.accountType ||
+      rp?.ageGroup ||
+      core?.ageGroup ||
+      rp?.gender ||
+      core?.gender
     );
   }
 
   hasInterestsOrHashtags(): boolean {
-    const data = this.report();
+    const rp = this.getReportProfile();
     return !!(
-      (data?.profile?.interests && data.profile.interests.length > 0) ||
-      (data?.profile?.hashtags && data.profile.hashtags.length > 0) ||
-      (data?.profile?.mentions && data.profile.mentions.length > 0)
+      (rp?.interests && rp.interests.length > 0) ||
+      (rp?.hashtags && rp.hashtags.length > 0) ||
+      (rp?.mentions && rp.mentions.length > 0)
     );
   }
 }

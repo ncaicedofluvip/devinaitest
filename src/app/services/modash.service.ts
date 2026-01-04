@@ -119,18 +119,7 @@ export interface ModashProfile {
 
 export interface ModashReportProfile {
   userId: string;
-  profile?: {
-    userId?: string;
-    username?: string;
-    fullname?: string;
-    picture?: string;
-    url?: string;
-    isVerified?: boolean;
-    isPrivate?: boolean;
-    followers?: number;
-    following?: number;
-    engagementRate?: number;
-  };
+  profile?: ModashProfile;
   audience?: ModashAudience;
   hashtags?: Array<{ tag: string; weight: number }>;
   mentions?: Array<{ tag: string; weight: number }>;
