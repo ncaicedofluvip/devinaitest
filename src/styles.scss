@@ -1,1 +1,501 @@
-/* You can add global styles to this file, and also import other style files */
+/* Tailwind CSS v4 - CSS-first configuration */
+@import "tailwindcss";
+
+/* Google Fonts - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ============================================
+   THEME CONFIGURATION - Tailwind CSS v4
+   ============================================ */
+@theme {
+  /* Primary Colors */
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+  --color-primary-950: #082f49;
+
+  /* Secondary Colors */
+  --color-secondary-50: #f8fafc;
+  --color-secondary-100: #f1f5f9;
+  --color-secondary-200: #e2e8f0;
+  --color-secondary-300: #cbd5e1;
+  --color-secondary-400: #94a3b8;
+  --color-secondary-500: #64748b;
+  --color-secondary-600: #475569;
+  --color-secondary-700: #334155;
+  --color-secondary-800: #1e293b;
+  --color-secondary-900: #0f172a;
+  --color-secondary-950: #020617;
+
+  /* Accent Colors */
+  --color-accent-50: #fdf4ff;
+  --color-accent-100: #fae8ff;
+  --color-accent-200: #f5d0fe;
+  --color-accent-300: #f0abfc;
+  --color-accent-400: #e879f9;
+  --color-accent-500: #d946ef;
+  --color-accent-600: #c026d3;
+  --color-accent-700: #a21caf;
+  --color-accent-800: #86198f;
+  --color-accent-900: #701a75;
+  --color-accent-950: #4a044e;
+
+  /* Success Colors */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+  --color-success-950: #052e16;
+
+  /* Warning Colors */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning-950: #451a03;
+
+  /* Error Colors */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error-950: #450a0a;
+
+  /* Font Families */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace;
+
+  /* Custom Spacing */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  --spacing-128: 32rem;
+}
+
+/* ============================================
+   BASE LAYER - Typography & Reset
+   ============================================ */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-secondary-900 leading-relaxed;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    @apply font-semibold text-secondary-900 leading-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+
+  h6 {
+    @apply text-base md:text-lg;
+  }
+
+  /* Paragraphs */
+  p {
+    @apply text-secondary-700 leading-relaxed;
+  }
+
+  /* Base Links */
+  a {
+    @apply text-primary-600 transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply text-primary-700 underline;
+  }
+
+  /* Code */
+  code {
+    font-family: var(--font-mono);
+    @apply text-sm bg-secondary-100 text-secondary-800 px-1.5 py-0.5 rounded;
+  }
+
+  pre {
+    font-family: var(--font-mono);
+    @apply text-sm bg-secondary-900 text-secondary-100 p-4 rounded-lg overflow-x-auto;
+  }
+
+  pre code {
+    @apply bg-transparent p-0;
+  }
+}
+
+/* ============================================
+   COMPONENTS LAYER - Reusable UI Components
+   ============================================ */
+@layer components {
+  /* ----------------------------------------
+     BUTTONS
+     ---------------------------------------- */
+  
+  /* Base Button */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 cursor-pointer border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Button Sizes */
+  .btn-xs {
+    @apply px-2.5 py-1 text-xs rounded;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm rounded;
+  }
+
+  .btn-md {
+    @apply px-4 py-2 text-sm rounded-md;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-base rounded-lg;
+  }
+
+  .btn-xl {
+    @apply px-8 py-4 text-lg rounded-lg;
+  }
+
+  /* Primary Button */
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 active:bg-primary-800;
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply bg-secondary-100 text-secondary-700 hover:bg-secondary-200 focus:ring-secondary-500 active:bg-secondary-300;
+  }
+
+  /* Outline Button */
+  .btn-outline {
+    @apply bg-transparent border-secondary-300 text-secondary-700 hover:bg-secondary-50 focus:ring-secondary-500;
+  }
+
+  .btn-outline-primary {
+    @apply bg-transparent border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500;
+  }
+
+  /* Ghost Button */
+  .btn-ghost {
+    @apply bg-transparent text-secondary-600 hover:bg-secondary-100 focus:ring-secondary-500;
+  }
+
+  /* Danger Button */
+  .btn-danger {
+    @apply bg-error-600 text-white hover:bg-error-700 focus:ring-error-500 active:bg-error-800;
+  }
+
+  /* Success Button */
+  .btn-success {
+    @apply bg-success-600 text-white hover:bg-success-700 focus:ring-success-500 active:bg-success-800;
+  }
+
+  /* ----------------------------------------
+     INPUTS
+     ---------------------------------------- */
+  
+  /* Base Input */
+  .input {
+    @apply block w-full px-3 py-2 text-sm text-secondary-900 bg-white border border-secondary-300 rounded-md shadow-sm placeholder-secondary-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 disabled:bg-secondary-50 disabled:text-secondary-500 disabled:cursor-not-allowed;
+  }
+
+  /* Input Sizes */
+  .input-sm {
+    @apply px-2.5 py-1.5 text-xs rounded;
+  }
+
+  .input-lg {
+    @apply px-4 py-3 text-base rounded-lg;
+  }
+
+  /* Input States */
+  .input-error {
+    @apply border-error-500 focus:ring-error-500 focus:border-error-500;
+  }
+
+  .input-success {
+    @apply border-success-500 focus:ring-success-500 focus:border-success-500;
+  }
+
+  /* Textarea */
+  .textarea {
+    @apply input min-h-[100px] resize-y;
+  }
+
+  /* Select */
+  .select {
+    @apply input appearance-none bg-no-repeat bg-right pr-10;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-size: 1.5em 1.5em;
+  }
+
+  /* Checkbox & Radio Base */
+  .checkbox,
+  .radio {
+    @apply h-4 w-4 text-primary-600 border-secondary-300 rounded focus:ring-primary-500 focus:ring-2 focus:ring-offset-0 transition-colors duration-200;
+  }
+
+  .radio {
+    @apply rounded-full;
+  }
+
+  /* Input Label */
+  .label {
+    @apply block text-sm font-medium text-secondary-700 mb-1;
+  }
+
+  /* Input Helper Text */
+  .helper-text {
+    @apply mt-1 text-xs text-secondary-500;
+  }
+
+  .helper-text-error {
+    @apply mt-1 text-xs text-error-600;
+  }
+
+  /* Input Group */
+  .input-group {
+    @apply mb-4;
+  }
+
+  /* ----------------------------------------
+     BADGES / CHIPS
+     ---------------------------------------- */
+  
+  /* Base Badge */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full;
+  }
+
+  /* Badge Sizes */
+  .badge-sm {
+    @apply px-2 py-0.5 text-xs;
+  }
+
+  .badge-lg {
+    @apply px-3 py-1 text-sm;
+  }
+
+  /* Badge Colors */
+  .badge-primary {
+    @apply bg-primary-100 text-primary-800;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary-100 text-secondary-800;
+  }
+
+  .badge-success {
+    @apply bg-success-100 text-success-800;
+  }
+
+  .badge-warning {
+    @apply bg-warning-100 text-warning-800;
+  }
+
+  .badge-error {
+    @apply bg-error-100 text-error-800;
+  }
+
+  .badge-accent {
+    @apply bg-accent-100 text-accent-800;
+  }
+
+  /* Chip (Interactive Badge) */
+  .chip {
+    @apply badge cursor-pointer transition-all duration-200 hover:shadow-sm;
+  }
+
+  .chip-primary {
+    @apply badge-primary hover:bg-primary-200;
+  }
+
+  .chip-secondary {
+    @apply badge-secondary hover:bg-secondary-200;
+  }
+
+  .chip-removable {
+    @apply pr-1;
+  }
+
+  .chip-remove {
+    @apply ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-black/10 transition-colors;
+  }
+
+  /* ----------------------------------------
+     LINKS (Component Variants)
+     ---------------------------------------- */
+  
+  /* Nav Link */
+  .nav-link {
+    @apply text-secondary-600 no-underline hover:text-primary-600 hover:no-underline font-medium transition-colors duration-200;
+  }
+
+  .nav-link.active {
+    @apply text-primary-600;
+  }
+
+  /* Subtle Link */
+  .link-subtle {
+    @apply text-secondary-500 hover:text-secondary-700 no-underline hover:underline;
+  }
+
+  /* Button Link */
+  .link-button {
+    @apply text-primary-600 font-medium no-underline hover:text-primary-700;
+  }
+
+  /* ----------------------------------------
+     CARDS
+     ---------------------------------------- */
+  .card {
+    @apply bg-white rounded-lg border border-secondary-200 shadow-sm;
+  }
+
+  .card-body {
+    @apply p-4 md:p-6;
+  }
+
+  .card-header {
+    @apply px-4 py-3 md:px-6 md:py-4 border-b border-secondary-200;
+  }
+
+  .card-footer {
+    @apply px-4 py-3 md:px-6 md:py-4 border-t border-secondary-200 bg-secondary-50 rounded-b-lg;
+  }
+
+  /* ----------------------------------------
+     DIVIDERS
+     ---------------------------------------- */
+  .divider {
+    @apply border-t border-secondary-200 my-4;
+  }
+
+  .divider-vertical {
+    @apply border-l border-secondary-200 mx-4 h-full;
+  }
+}
+
+/* ============================================
+   UTILITIES LAYER - Custom Utilities
+   ============================================ */
+@layer utilities {
+  /* Text Utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Focus Visible Ring */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
+  }
+
+  /* Truncate with ellipsis */
+  .truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Scrollbar Utilities */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Animation Utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
