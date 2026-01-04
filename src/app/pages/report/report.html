@@ -106,7 +106,51 @@
             </div>
           </div>
         </div>
+        @if (getBio()) {
+          <div class="profile-bio">
+            <p>{{ getBio() }}</p>
+          </div>
+        }
       </div>
+
+      <!-- Profile Details -->
+      @if (hasProfileDetails()) {
+        <div class="profile-details-section">
+          <h2 class="section-title">Profile Details</h2>
+          <div class="details-grid">
+            @if (getLocation() !== '-') {
+              <div class="detail-item">
+                <span class="detail-label">Location</span>
+                <span class="detail-value">{{ getLocation() }}</span>
+              </div>
+            }
+            @if (getAccountType() !== '-') {
+              <div class="detail-item">
+                <span class="detail-label">Account Type</span>
+                <span class="detail-value">{{ getAccountType() }}</span>
+              </div>
+            }
+            @if (getGender() !== '-') {
+              <div class="detail-item">
+                <span class="detail-label">Gender</span>
+                <span class="detail-value">{{ getGender() }}</span>
+              </div>
+            }
+            @if (getAgeGroup() !== '-') {
+              <div class="detail-item">
+                <span class="detail-label">Age Group</span>
+                <span class="detail-value">{{ getAgeGroup() }}</span>
+              </div>
+            }
+            @if (getCredibility() !== '-') {
+              <div class="detail-item">
+                <span class="detail-label">Audience Credibility</span>
+                <span class="detail-value">{{ getCredibility() }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
 
       <!-- Metrics Grid -->
       <div class="metrics-section">
@@ -140,8 +184,176 @@
             <span class="metric-label">Total Posts</span>
             <span class="metric-value">{{ getTotalPosts() }}</span>
           </div>
+          @if (getAvgReelsPlays() !== '-') {
+            <div class="metric-card">
+              <span class="metric-label">Avg. Reels Plays</span>
+              <span class="metric-value">{{ getAvgReelsPlays() }}</span>
+            </div>
+          }
+          @if (getPaidPostPerformance() !== '-') {
+            <div class="metric-card">
+              <span class="metric-label">Paid Post Performance</span>
+              <span class="metric-value">{{ getPaidPostPerformance() }}</span>
+            </div>
+          }
         </div>
       </div>
+
+      <!-- Audience Demographics -->
+      @if (hasAudienceData()) {
+        <div class="audience-section">
+          <h2 class="section-title">Audience Demographics</h2>
+          
+          <div class="demographics-grid">
+            <!-- Gender Distribution -->
+            @if (getGenderData().length > 0) {
+              <div class="chart-card">
+                <h3 class="chart-title">Gender Distribution</h3>
+                <div class="bar-chart">
+                  @for (item of getGenderData(); track item.code) {
+                    <div class="bar-item">
+                      <div class="bar-label">{{ formatGenderCode(item.code) }}</div>
+                      <div class="bar-container">
+                        <div class="bar-fill bar-fill-gender" [style.width]="getBarWidth(item.weight, 1)"></div>
+                      </div>
+                      <div class="bar-value">{{ formatPercentage(item.weight) }}</div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Age Distribution -->
+            @if (getAgeData().length > 0) {
+              <div class="chart-card">
+                <h3 class="chart-title">Age Distribution</h3>
+                <div class="bar-chart">
+                  @for (item of getAgeData(); track item.code) {
+                    <div class="bar-item">
+                      <div class="bar-label">{{ formatAgeCode(item.code) }}</div>
+                      <div class="bar-container">
+                        <div class="bar-fill bar-fill-age" [style.width]="getBarWidth(item.weight, getMaxWeight(getAgeData()))"></div>
+                      </div>
+                      <div class="bar-value">{{ formatPercentage(item.weight) }}</div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Country Distribution -->
+            @if (getCountryData().length > 0) {
+              <div class="chart-card">
+                <h3 class="chart-title">Top Countries</h3>
+                <div class="bar-chart">
+                  @for (item of getCountryData(); track item.code) {
+                    <div class="bar-item">
+                      <div class="bar-label">{{ item.name }}</div>
+                      <div class="bar-container">
+                        <div class="bar-fill bar-fill-country" [style.width]="getBarWidth(item.weight, getMaxWeight(getCountryData()))"></div>
+                      </div>
+                      <div class="bar-value">{{ formatPercentage(item.weight) }}</div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- City Distribution -->
+            @if (getCityData().length > 0) {
+              <div class="chart-card">
+                <h3 class="chart-title">Top Cities</h3>
+                <div class="bar-chart">
+                  @for (item of getCityData(); track item.name) {
+                    <div class="bar-item">
+                      <div class="bar-label">{{ item.name }}</div>
+                      <div class="bar-container">
+                        <div class="bar-fill bar-fill-city" [style.width]="getBarWidth(item.weight, getMaxWeight(getCityData()))"></div>
+                      </div>
+                      <div class="bar-value">{{ formatPercentage(item.weight) }}</div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Language Distribution -->
+            @if (getLanguageData().length > 0) {
+              <div class="chart-card">
+                <h3 class="chart-title">Languages</h3>
+                <div class="bar-chart">
+                  @for (item of getLanguageData(); track item.code) {
+                    <div class="bar-item">
+                      <div class="bar-label">{{ item.name }}</div>
+                      <div class="bar-container">
+                        <div class="bar-fill bar-fill-language" [style.width]="getBarWidth(item.weight, getMaxWeight(getLanguageData()))"></div>
+                      </div>
+                      <div class="bar-value">{{ formatPercentage(item.weight) }}</div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Audience Types -->
+            @if (getAudienceTypes().length > 0) {
+              <div class="chart-card">
+                <h3 class="chart-title">Audience Types</h3>
+                <div class="bar-chart">
+                  @for (item of getAudienceTypes(); track item.code) {
+                    <div class="bar-item">
+                      <div class="bar-label">{{ formatAudienceTypeCode(item.code) }}</div>
+                      <div class="bar-container">
+                        <div class="bar-fill bar-fill-type" [style.width]="getBarWidth(item.weight, 1)"></div>
+                      </div>
+                      <div class="bar-value">{{ formatPercentage(item.weight) }}</div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Interests & Hashtags -->
+      @if (hasInterestsOrHashtags()) {
+        <div class="interests-section">
+          <h2 class="section-title">Interests & Content</h2>
+          <div class="interests-grid">
+            @if (getInterests().length > 0) {
+              <div class="interests-card">
+                <h3 class="interests-title">Interests</h3>
+                <div class="tags-container">
+                  @for (interest of getInterests(); track interest.id) {
+                    <span class="tag tag-interest">{{ interest.name }}</span>
+                  }
+                </div>
+              </div>
+            }
+            @if (getHashtags().length > 0) {
+              <div class="interests-card">
+                <h3 class="interests-title">Top Hashtags</h3>
+                <div class="tags-container">
+                  @for (hashtag of getHashtags(); track hashtag.tag) {
+                    <span class="tag tag-hashtag">#{{ hashtag.tag }}</span>
+                  }
+                </div>
+              </div>
+            }
+            @if (getMentions().length > 0) {
+              <div class="interests-card">
+                <h3 class="interests-title">Top Mentions</h3>
+                <div class="tags-container">
+                  @for (mention of getMentions(); track mention.tag) {
+                    <span class="tag tag-mention">&#64;{{ mention.tag }}</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
 
       <!-- Raw JSON Panel -->
       <div class="raw-json-section">
